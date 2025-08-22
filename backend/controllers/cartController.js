@@ -12,7 +12,7 @@ const addToCart = async (req, res) => {
         else {
             cartData[req.body.itemId] += 1
         }
-        await userModel.findByIdAndDelete(req.body.userId, { cartData })
+        await userModel.findByIdAndUpdate(req.body.userId, { cartData })
         res.json({ success: true, message: "Added to cart" })
     } catch (error) {
         console.log("Error while adding the item in the cart", error)

@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { food_list } from "../assets/frontend_assets/assets";
 import axios from 'axios'
 
 export const StoreContext = createContext(null)
@@ -8,12 +7,17 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({})
     const url = "http://localhost:4000"
     const [token, setToken] = useState("")
+    const [foodList, setFoodList] = useState([])
 
-    useEffect(async () => {
-        if (localStorage.getItem('token')) {
-            setToken(localStorage.getItem('token'))
-            await localCartData(localStorage.getItem('token'))
+    useEffect(() => {
+        async function loadData() {
+            await fetchFoodList()
+            if (localStorage.getItem('token')) {
+                setToken(localStorage.getItem('token'))
+                await localCartData(localStorage.getItem('token'))
+            }
         }
+        loadData()
     }, [])
 
     const addToCart = async (itemId) => {
@@ -42,7 +46,7 @@ const StoreContextProvider = (props) => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                let itemInfo = food_list.find((product) => product._id == item);
+                let itemInfo = foodList.find((product) => product._id == item);
                 totalAmount += itemInfo.price * cartItems[item];
             }
         }
@@ -50,12 +54,17 @@ const StoreContextProvider = (props) => {
     }
 
     const localCartData = async (token) => {
-        const response = await axios.post(url+"/api/cart/get",{},{headers:{token}})
+        const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } })
         setCartItems(response.data.cartData)
     }
 
+    const fetchFoodList = async () => {
+        const response = await axios.get(url + "/api/food/list");
+        setFoodList(response.data.data)
+    }
+
     const contextValue = {
-        food_list,
+        foodList,
         cartItems,
         setCartItems,
         addToCart,

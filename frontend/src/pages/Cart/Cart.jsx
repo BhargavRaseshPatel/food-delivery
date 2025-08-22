@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../context/StoreContext'
 import { useNavigate } from 'react-router-dom'
+import { food_list } from '../../assets/frontend_assets/assets'
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount } = useContext(StoreContext)
+  const { cartItems, foodList, removeFromCart, getTotalCartAmount } = useContext(StoreContext)
   const navigate = useNavigate()
 
   const [deliveryFee, setDeliveryFee] = useState(0)
@@ -31,12 +32,12 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item, index) => {
+        {foodList.map((item, index) => {
           if (cartItems[item._id] > 0) {
             return (
-              <div>
+              <div key={index}>
                 <div className='cart-items-title cart-items-item'>
-                  <img src={item.image} alt="" />
+                  <img src={food_list.find((i) => i._id == item._id ).image} alt="" />
                   <p>{item.name}</p>
                   <p>$ {item.price}</p>
                   <p>{cartItems[item._id]}</p>
