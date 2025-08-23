@@ -5,19 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import { food_list } from '../../assets/frontend_assets/assets'
 
 const Cart = () => {
-  const { cartItems, foodList, removeFromCart, getTotalCartAmount } = useContext(StoreContext)
+  const { cartItems, foodList, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext)
   const navigate = useNavigate()
 
   const [deliveryFee, setDeliveryFee] = useState(0)
 
   useEffect(() => {
-    if(cartItems != {}){
+    if (cartItems != {}) {
       setDeliveryFee(2)
-    }else {
+    } else {
       setDeliveryFee(0)
     }
-    console.log(cartItems)
-  } ,[cartItems])
+  }, [cartItems])
 
   return (
     <div className='cart'>
@@ -34,10 +33,12 @@ const Cart = () => {
         <hr />
         {foodList.map((item, index) => {
           if (cartItems[item._id] > 0) {
+            const imageFrontEnd = food_list.find((i) => i._id == item._id)?.image
+
             return (
               <div key={index}>
                 <div className='cart-items-title cart-items-item'>
-                  <img src={food_list.find((i) => i._id == item._id ).image} alt="" />
+                  <img src={!imageFrontEnd ? url + "/images/" + item.image : imageFrontEnd} alt="" />
                   <p>{item.name}</p>
                   <p>$ {item.price}</p>
                   <p>{cartItems[item._id]}</p>
@@ -61,7 +62,7 @@ const Cart = () => {
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>$ {getTotalCartAmount() == 0 ? 0 : 2 }</p>
+              <p>$ {getTotalCartAmount() == 0 ? 0 : 2}</p>
             </div>
             <hr />
             <div className="cart-total-details">

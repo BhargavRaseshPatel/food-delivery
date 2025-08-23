@@ -3,14 +3,15 @@ import './FoodItem.css'
 import { assets, food_list } from '../../assets/frontend_assets/assets.js'
 import { StoreContext } from '../../context/StoreContext.jsx'
 
-const FoodItem = ({ id, name, price, description }) => {
+const FoodItem = ({ id, name, price, description, image }) => {
   // const [itemCount, setItemCount] = useState(0)
-  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext)
+  const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext)
+  const imageFrontEnd = food_list.find((item) => item._id == id)?.image
 
   return (
     <div className='food-item'>
       <div className="food-item-img-container">
-        <img src={food_list.find((item) => item._id == id).image} alt="" className="food-item-image" />
+        <img src={ !imageFrontEnd ? url+"/images/"+image : imageFrontEnd } alt="" className="food-item-image" />
         {
           !cartItems[id] ? <img className='add' onClick={() => addToCart(id)} src={assets.add_icon_white} alt='' /> :
             <div className="food-item-counter">
