@@ -62,27 +62,49 @@ const verifyOrder = async (req, res) => {
 
     try {
         if (success == 'true') {
-            await orderModel.findByIdAndUpdate(orderId, {payment:true})
-            res.json({success:true, message : "Paid"})
+            await orderModel.findByIdAndUpdate(orderId, { payment: true })
+            res.json({ success: true, message: "Paid" })
         } else {
             await orderModel.findByIdAndDelete(orderId)
-            res.json({success: false, message: "Not Paid"})
+            res.json({ success: false, message: "Not Paid" })
         }
     } catch (error) {
         console.log(error);
-        res.json({success: false, message : "Error"+error})
+        res.json({ success: false, message: "Error" + error })
     }
 }
 
 // user orders for frontend
 const userOrder = async (req, res) => {
     try {
-        const orders = await orderModel.find({userId : req.body.userId})
-        res.json({success : true , data : orders})
+        const orders = await orderModel.find({ userId: req.body.userId })
+        res.json({ success: true, data: orders })
     } catch (error) {
         console.log("Error while fetching the order for the user", error)
-        res.json({success : false, message : 'Error'})
+        res.json({ success: false, message: 'Error' })
     }
 }
 
-export { placeOrder, verifyOrder, userOrder }
+// listing orders for admin panel
+const listOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({})
+        res.json({ success: true, data: orders })
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: 'Error' })
+    }
+}
+
+// api for updating order status
+const updateStatus = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status })
+        res.json({ success: true, message : "Status Updated" })
+    } catch (error) {
+        console.log("Error while updating the status", error)
+        res.json({success : false, message : "Error" + error})
+    }
+}
+
+export { placeOrder, verifyOrder, userOrder, listOrders, updateStatus }
