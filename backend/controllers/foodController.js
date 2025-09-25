@@ -17,7 +17,7 @@ const addFood = async (req, res) => {
         res.json({ success: true, message: "Food Added" })
     } catch (error) {
         console.log("Error while add in the food item", error)
-        res.json({ success: false, message: "Errorƒ" })
+        res.json({ success: false, message: "Error" })
     }
 }
 

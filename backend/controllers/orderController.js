@@ -1,8 +1,12 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from 'stripe'
+import dotenv from "dotenv";
+dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// // Ensure the Stripe secret key is loaded
+
 // placing user order from frontend
 const placeOrder = async (req, res) => {
 
@@ -22,7 +26,7 @@ const placeOrder = async (req, res) => {
             price_data: {
                 currency: "inr",
                 product_data: {
-                    name: item_name,
+                    name: item.name,
                 },
                 unit_amount: item.price * 100 * 80
             },

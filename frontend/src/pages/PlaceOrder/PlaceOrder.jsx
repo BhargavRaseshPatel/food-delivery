@@ -30,25 +30,22 @@ const PlaceOrder = () => {
     event.preventDefault()
     let orderItems = []
     foodList.map((item) => {
-      if(cartItems[item._id] > 0) {
+      if (cartItems[item._id] > 0) {
         let itemInfo = item;
         itemInfo["quantity"] = cartItems[item._id]
         orderItems.push(itemInfo)
       }
     })
 
-    // console.log("Order item")
-
     let orderData = {
-      address : data,
-      items : orderItems,
-      amount : getTotalCartAmount() + 2,
-
+      address: data,
+      items: orderItems,
+      amount: getTotalCartAmount() + 2,
     }
 
-    let response = await axios.post(url + '/api/order/place',orderData, {headers: {token}})
+    let response = await axios.post(url + '/api/order/place', orderData, { headers: { token } })
 
-    if(response.data.success) {
+    if (response.data.success) {
       const { session_url } = response.data;
       window.location.replace(session_url)
     }
@@ -75,7 +72,7 @@ const PlaceOrder = () => {
           <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} type="text" placeholder='Zip code' />
           <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country' />
         </div>
-        <input required  name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='phone' />
+        <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='phone' />
       </div>
       <div className="place-order-right">
         <div className="cart-total">
