@@ -8,14 +8,17 @@ const StoreContextProvider = (props) => {
     const url = "https://food-delivery-1-xvby.onrender.com"
     const [token, setToken] = useState("")
     const [foodList, setFoodList] = useState([])
+    const [loadingFoodList, setLoadingFoodList] = useState(false)
 
     useEffect(() => {
         async function loadData() {
+            setLoadingFoodList(true)
             await fetchFoodList()
             if (localStorage.getItem('token')) {
                 setToken(localStorage.getItem('token'))
                 await localCartData(localStorage.getItem('token'))
             }
+            setLoadingFoodList(false)
         }
         loadData()
     }, [])
@@ -72,7 +75,8 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         url,
         setToken,
-        token
+        token,
+        loadingFoodList
     }
     return (
         <StoreContext.Provider value={contextValue}>

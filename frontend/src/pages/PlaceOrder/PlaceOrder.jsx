@@ -67,8 +67,8 @@ const PlaceOrder = () => {
   }, [token])
 
   return (
-    <div className="place-order">
-      <form onSubmit={placeOrder} >
+    <form onSubmit={placeOrder} >
+      <div className="place-order">
         <div className="place-order-left">
           <p className="title">Delivery Information</p>
           <div className="multi-fields">
@@ -87,31 +87,31 @@ const PlaceOrder = () => {
           </div>
           <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='phone' />
         </div>
-      </form>
 
-      <div className="place-order-right">
-        <div className="cart-total">
-          <h2>Cart Totals</h2>
-          <div>
-            <div className="cart-total-details">
-              <p>Subtotal</p>
-              <p>$ {getTotalCartAmount()}</p>
+        <div className="place-order-right">
+          <div className="cart-total">
+            <h2>Cart Totals</h2>
+            <div>
+              <div className="cart-total-details">
+                <p>Subtotal</p>
+                <p>$ {getTotalCartAmount()}</p>
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <p>Delivery Fee</p>
+                <p>$ {getTotalCartAmount() == 0 ? 0 : 2}</p>
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <p>Total</p>
+                <p>$ {getTotalCartAmount() == 0 ? 0 : getTotalCartAmount() + 2}</p>
+              </div>
             </div>
-            <hr />
-            <div className="cart-total-details">
-              <p>Delivery Fee</p>
-              <p>$ {getTotalCartAmount() == 0 ? 0 : 2}</p>
-            </div>
-            <hr />
-            <div className="cart-total-details">
-              <p>Total</p>
-              <p>$ {getTotalCartAmount() == 0 ? 0 : getTotalCartAmount() + 2}</p>
-            </div>
+            <button type='submit'>PROCEED TO PAYMENT</button>
           </div>
-          <button type='submit' onClick={() => navigate('/order')}>PROCEED TO PAYMENT</button>
         </div>
       </div>
-    </div>
+    </form>
   )
 }
 

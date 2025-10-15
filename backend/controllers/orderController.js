@@ -24,22 +24,22 @@ const placeOrder = async (req, res) => {
 
         const line_items = req.body.items.map((item) => ({
             price_data: {
-                currency: "inr",
+                currency: "cad",
                 product_data: {
                     name: item.name,
                 },
-                unit_amount: item.price * 100 * 80
+                unit_amount: item.price * 100 
             },
             quantity: item.quantity
         }))
 
         line_items.push({
             price_data: {
-                currency: "inr",
+                currency: "cad",
                 product_data: {
                     name: "Delivery Charges"
                 },
-                unit_amount: 2 * 100 * 80
+                unit_amount: 2 * 100
             },
             quantity: 1
         })

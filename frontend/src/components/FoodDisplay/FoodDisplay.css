@@ -14,3 +14,53 @@
     gap: 30px;
     row-gap: 50px;
 }
+
+.loading-items {
+    display: flex;
+    justify-content: center;
+}
+
+.spinner-content {
+    display: flex;
+    /* background-color: #ccc; */
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px;
+    border-radius: 24px;
+    border: 2px solid orange;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    /* optional — centers vertically within parent */
+}
+
+/* spinner icon styling */
+.spinner-content i{
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #ccc;
+    /* light gray border */
+    border-top: 3px solid orange;
+    /* blue top border for animation effect */
+    border-radius: 50%;
+    /* makes it circular */
+    animation: spin 1s linear infinite;
+}
+
+.spinner-loading h2 {
+    color: orange;
+}
+
+/* rotation animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
